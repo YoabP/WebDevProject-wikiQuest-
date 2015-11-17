@@ -2,10 +2,16 @@
 
 angular.module('wikiQuestApp')
   .controller('NavbarCtrl', function ($scope, $location) {
-    $scope.menu = [{
-      'title': 'Home',
-      'link': '/'
-    }];
+    $scope.menu = [
+      {
+        'title': 'Home',
+        'link': '/'
+      },
+      {
+        'title': 'Game',
+        'link': '/game'
+      }
+    ];
 
     $scope.isCollapsed = true;
 
