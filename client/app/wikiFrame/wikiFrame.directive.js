@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('wikiQuestApp')
-.directive('wikiFrame', ['$compile', function ($compile) {
-  return function(scope, element, attrs) {
-      scope.$watch(
-        function(scope) {
-          return scope.$eval(attrs.wikiFrame);
-        },
-        function(value) {
-          element.html(value);
-          $compile(element.contents())(scope);
-        }
-      )};
-    }]);
+  .directive('wikiFrame', ['$compile', function ($compile) {
+    return {
+      template: '<div></div>',
+      restrict: 'E',
+      link: function (scope, element, attrs) {
+        scope.$watch(attrs.page, function(value) {
+            element.html(value);
+            $compile(element.contents())(scope);
+          });
+      }
+    };
+  }]);
