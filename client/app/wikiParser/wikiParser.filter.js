@@ -2,7 +2,7 @@
 
 angular.module('wikiQuestApp')
   .filter('wikiParser', function() {
-    return function(input) {
+    return function(input, title) {
       input = input || '';
       var out = "";
       var tempContainer = document.createElement('div');
@@ -35,6 +35,9 @@ angular.module('wikiQuestApp')
       //patch img tags
       //pending ...
       out = tempContainer.innerHTML;
+      //append missing title header
+      out = '<h1 id="firstHeading" class="firstHeading" lang="en">' +
+            title.replace(/_/g,' ') +'</h1>' + out;
       //escape possible angular {{ stuff }}
       return out.replace(/({\s*{[\s\S]*?}\s*})/g,'<span ng-non-bindable>$1</span>');
     };

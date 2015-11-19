@@ -1,0 +1,14 @@
+@import "wiki.css";
+
+.wq-content{
+  border: solid #A7D7F9;
+	background-color: #FFF;
+	color: #252525;
+	padding: 10px 20px;
+  height: 80vh;
+  overflow: auto;
+}
+wiki-frame{
+  //make ctrl-f useless on the wikiFrame
+   content: "foo";
+}

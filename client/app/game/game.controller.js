@@ -8,7 +8,7 @@ angular.module('wikiQuestApp')
       $scope.data = data;
       //wikiApi.getFull("UK").then(function(data) {
       wikiApi.getFullRedirectSafe($scope.data.title).then(function(data) {
-        var parsed = wikiParserFilter(data.parse.text['*']);
+        var parsed = wikiParserFilter(data.parse.text['*'],$scope.data.title );
         //$scope.pageFullHTML = $sce.trustAsHtml(parsed);
         $scope.pageFullHTML = parsed;
       });
@@ -27,7 +27,7 @@ angular.module('wikiQuestApp')
       console.log(wikiApi.getFullRedirectSafe());
       wikiApi.getFullRedirectSafe(title).then(function(data) {
         //$scope.pageFullHTML = $sce.trustAsHtml(wikiParserFilter(data.parse.text['*']));
-        $scope.pageFullHTML = wikiParserFilter(data.parse.text['*']);
+        $scope.pageFullHTML = wikiParserFilter(data.parse.text['*'], title);
       });
     };
   }]);
