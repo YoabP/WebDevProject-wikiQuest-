@@ -40,6 +40,6 @@ angular.module('wikiQuestApp')
       out = '<h1 id="firstHeading" class="firstHeading" lang="en">' +
             title.replace(/_/g,' ') +'</h1>' + out;
       //escape possible angular {{ stuff }}
-      return out.replace(/({\s*{[\s\S]*?}\s*})/g,'<span ng-non-bindable>$1</span>');
+      return out.replace(/({\s*{[^}{]*?}\s*})/g,'<span ng-non-bindable>$1</span>');
     };
   });
