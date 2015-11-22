@@ -301,9 +301,6 @@ td.mw-enhanced-rc,
         padding-right: 10px;
         text-align: center
     }
-    a.new {
-        color: #BA0000
-    }
     .plainlinks a.external {
         background: none !important;
         padding: 0 !important
@@ -889,7 +886,7 @@ td.mw-enhanced-rc,
     }
     a.new:visited,
     #p-personal a.new:visited {
-        color: #a55858
+        color: #ba0000
     }
     .mw-body a.extiw,
     .mw-body a.extiw:active {
@@ -1580,7 +1577,7 @@ td.mw-enhanced-rc,
     }
     div.vectorTabs li {}div.vectorTabs li.new a,
     div.vectorTabs li.new a:visited {
-        color: #a55858
+        color: #ba0000;
     }
     div.vectorTabs li.selected {
         background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABkAQAAAABvV2fNAAAADUlEQVQIHWNoYBgWEACJ5TIB0K9KcAAAAABJRU5ErkJggg==);

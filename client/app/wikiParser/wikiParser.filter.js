@@ -13,8 +13,8 @@ angular.module('wikiQuestApp')
         var element = links[i];
         var oldRef = element.getAttribute('href');
         if(oldRef) {
-  				if (oldRef[0]=='#'){
-            element.setAttribute('href', oldRef); //preserve anchor
+  				if (oldRef[0]=='#' && oldRef!='#'){
+            element.setAttribute('href', '#'+oldRef); //preserve anchor
           }
   				else if (oldRef[0]=='/' && oldRef[1]=='w' && oldRef[2]!='/') { //is internal
   					var index = oldRef.lastIndexOf('/');
@@ -28,7 +28,8 @@ angular.module('wikiQuestApp')
             element.setAttribute('href', '#');
           }
   				else {
-            element.setAttribute('href', '#');
+            element.setAttribute('href', '');
+            element.classList.add('new');
           }
   			}
       }
