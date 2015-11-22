@@ -16,6 +16,7 @@
 .wq-history{
   @extend .wq-target-frame;
   border: solid #D7F9A7;
+  overflow: hidden;
   h1{
     margin: 0px;
     margin-bottom: 0.1em;
@@ -26,5 +27,8 @@
     overflow: hidden;
     padding-top: 0.5em;
     border-bottom: 1px solid #AAA;
+  }
+  div{
+    overflow: auto;
   }
 }

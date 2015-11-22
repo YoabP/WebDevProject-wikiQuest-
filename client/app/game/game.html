@@ -4,18 +4,26 @@
     <div class="col-xs-4">
       <div class="row">
         <div class="col-xs-12">
-          <wiki-target-frame extract="target">
+          <wiki-target-frame extract="target" >
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <div class="wq-history">
+          <div class="wq-history" scroll-on-change="history.length" mode="bottom">
+            <h1>History</h1>
+            <div>
+              <ul>
+                <li ng-repeat="page in history track by $index">
+                  <a href="#"  ng-click="getBack(page,$index)"> {{ page }} </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div class="col-xs-8">
-      <div class="wq-content">
+      <div class="wq-content" scroll-on-change="pageFullHTML" mode="top">
         <wiki-frame page="pageFullHTML"></wiki-frame>
       </div>
     </div>
