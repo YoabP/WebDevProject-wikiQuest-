@@ -8,7 +8,16 @@
   height: 80vh;
   overflow: auto;
 }
-wiki-frame{
-  //make ctrl-f useless on the wikiFrame
-   content: "foo";
+.wq-target-frame{
+  border: solid #F9D7A7;
+  background-color: #FFF;
+  color: #252525;
+  padding: 10px 20px;
+  height: 40vh;
+  overflow: auto;
+}
+.wq-history{
+  border: solid #D7F9A7;
+  height: 40vh;
+  overflow: auto;
 }

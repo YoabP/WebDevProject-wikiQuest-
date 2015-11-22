@@ -8,6 +8,7 @@ var config = require('./environment');
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
+  //TODO: take out of session and games
 }
 
 // When the user connects.. perform this

@@ -16,7 +16,7 @@ angular.module('wikiQuestApp')
           return { id: pid , title: ptitle};
         });
     },
-    getExtract: function getPageExctract (wikipediaPage){
+    getExtract: function getPageExctract (wikipediaPage, pageId){
       return $http.jsonp("http://en.wikipedia.org/w/api.php?action=query&format=json&exintro&callback=JSON_CALLBACK",
         {params: {
           titles:wikipediaPage,
@@ -24,7 +24,10 @@ angular.module('wikiQuestApp')
           uselang:'en'
         }})
       .then(function (response){
-            return response.data;
+          if(pageId){
+            return response.data.query.pages[pageId];
+          }
+          return response.data;
         });
     },
     getFull: function getFullPage(wikipediaPage){
@@ -35,6 +38,7 @@ angular.module('wikiQuestApp')
           uselang:'en'
         }})
       .then(function (response){
+
           return response.data;
         });
     },
