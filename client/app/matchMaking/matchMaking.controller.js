@@ -56,7 +56,7 @@ angular.module('wikiQuestApp')
         //TODO: indicate match was created succes mssg
         changeMatch(response.data);
         $scope.hosting = true;
-        createAlert("success", "Match Created", 3000);
+        createAlert("success", "Match Created", 2000);
         $scope.status.msg = "Match Created";
         $scope.status.style= "bg-success text-success";
       });
@@ -125,6 +125,5 @@ angular.module('wikiQuestApp')
           $scope.closeAlert(index);
         }, time);
         $scope.alerts.push({type: type, msg: msg});
-
       }
   });

@@ -6,7 +6,8 @@ angular.module('wikiQuestApp', [
   'ngSanitize',
   'ngRoute',
   'btford.socket-io',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'ngAnimate'
 ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
