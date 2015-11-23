@@ -6,7 +6,18 @@
 'use strict';
 
 var Thing = require('../api/thing/thing.model');
-
+var Match = require('../api/match/match.model');
+Match.find({}).remove(function() {
+  Match.create({
+    creator : 'Juan',
+    started : false,
+    ended: false
+  }, {
+    creator : 'Semilla',
+    started : false,
+    ended: false
+  });
+});
 
 Thing.find({}).remove(function() {
   Thing.create({

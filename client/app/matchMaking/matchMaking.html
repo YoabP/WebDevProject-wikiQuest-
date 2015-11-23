@@ -1,0 +1,38 @@
+<div class="col-md-12">
+  <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" dismiss-on-timeout="2000">{{alert.msg}}</alert>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-4">
+      <div class="wq-matches-frame">
+        <ul>
+          <li ng-repeat="match in matches" ng-if="!match.started">
+            Host: {{ match.creator }} guest: {{match.guests}}
+            <a href class="btn btn-xs btn-primary" ng-click="joinMatch(match)" ng-if="match._id !== currentMatch._id">
+              join
+            </a>
+            <a href class="btn btn-xs btn-danger" ng-click="cancelMatch()" ng-if="hosting && match._id === currentMatch._id">
+              destroy
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-xs-8">
+      <div class="wq-match-frame">
+        <span>ID: {{ currentMatch._id}}</span><br>
+        <span>HOST: {{ currentMatch.creator}}</span><br>
+        <span>GUESTS: {{ currentMatch.guests}}</span><br>
+      </div>
+    </div>
+  </div>
+</div>
+<form class="match-form">
+  <label>Create Match</label>
+  <p class="input-group">
+    <input type="text" class="form-control" placeholder="Alias" ng-model="alias">
+    <span class="input-group-btn">
+      <button type="submit" class="btn btn-primary" ng-click="createMatch()">Add New</button>
+    </span>
+  </p>
+</form>

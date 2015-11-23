@@ -10,6 +10,10 @@ angular.module('wikiQuestApp')
       {
         'title': 'Game',
         'link': '/game'
+      },
+      {
+        'title': 'Match Making',
+        'link': '/matchMaking'
       }
     ];
 

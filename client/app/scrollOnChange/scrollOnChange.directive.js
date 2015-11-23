@@ -16,8 +16,6 @@ angular.module('wikiQuestApp')
                 else{
                   element[0].scrollTop = element[0].scrollHeight;
                 }
-
-
             });
       }
     };
