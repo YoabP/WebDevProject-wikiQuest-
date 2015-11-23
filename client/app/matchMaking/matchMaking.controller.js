@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('wikiQuestApp')
-  .controller('MatchMakingCtrl', function ($scope, $http, $timeout, socket) {
+  .controller('MatchMakingCtrl', ['$scope', '$http', '$timeout', '$location', '$notification', 'socket',
+   function ($scope, $http, $timeout, $location, $notification, socket) {
 
 //important code
     //variables
     $scope.matches = [];
     $scope.alias = '';
-    $scope.status = {}; //{ type: 'danger', msg: 'Oh snap! Change a few things up and try submitting again.' }
+    $scope.status = {}; 
     $scope.alerts =[];
     $scope.currentMatch = {};
     $scope.hosting = false;
@@ -24,6 +25,10 @@ angular.module('wikiQuestApp')
     socket.socket.on('match:save', function (item) {
       if(item._id === $scope.currentMatch._id){ //update cMatch
         $scope.currentMatch = item;
+        if($scope.currentMatch.started){
+          alert("started");
+          matchStarted();
+        }
       }
     });
     socket.socket.on('match:remove', function (item) {
@@ -56,9 +61,8 @@ angular.module('wikiQuestApp')
         //TODO: indicate match was created succes mssg
         changeMatch(response.data);
         $scope.hosting = true;
+        activeAlias = $scope.alias;
         createAlert("success", "Match Created", 2000);
-        $scope.status.msg = "Match Created";
-        $scope.status.style= "bg-success text-success";
       });
     };
     //Match join
@@ -82,14 +86,11 @@ angular.module('wikiQuestApp')
       $scope.status.style= "bg-danger text-danger";
 		}
     //start a Match
-    function startMatch(solo){
+    $scope.startMatch = function (solo) {
     	//send to other URL and send the currentMatchKey
-        if(solo){
-            window.location.href = 'game.html?match=solo&username=loner';
-        }
-        else{
-            currentMatchRef.child('started').set(true);
-        }
+      //window.location.href = 'game.html?match=solo&username=loner';
+      $http.put('/api/matches/' +$scope.currentMatch._id, {started: true})
+      .then( function (response){console.log(response);});
     }
     //private functions
     function matchCanceled(){
@@ -118,6 +119,9 @@ angular.module('wikiQuestApp')
         $scope.currentMatch = newMatch;
         $scope.hosting=false;
       }
+      function matchStarted(){
+        $location.url('/game?alias='+activeAlias+'&match='+$scope.currentMatch._id);
+      }
       //create alert
       function createAlert(type, msg, time){
         var index = $scope.alerts.length;
@@ -126,4 +130,4 @@ angular.module('wikiQuestApp')
         }, time);
         $scope.alerts.push({type: type, msg: msg});
       }
-  });
+  }]);

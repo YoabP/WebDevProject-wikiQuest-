@@ -5,6 +5,7 @@ angular.module('wikiQuestApp')
     $routeProvider
       .when('/game', {
         templateUrl: 'app/game/game.html',
-        controller: 'GameCtrl'
+        controller: 'GameCtrl',
+        reloadOnSearch: false
       });
   });

@@ -23,6 +23,9 @@
         <span>ID: {{ currentMatch._id}}</span><br>
         <span>HOST: {{ currentMatch.creator}}</span><br>
         <span>GUESTS: {{ currentMatch.guests}}</span><br>
+        <a href class="btn btn-success" ng-click="startMatch()" ng-if="hosting">
+          Start
+        </a>
       </div>
     </div>
   </div>

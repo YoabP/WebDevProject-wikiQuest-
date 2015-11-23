@@ -7,7 +7,9 @@ angular.module('wikiQuestApp', [
   'ngRoute',
   'btford.socket-io',
   'ui.bootstrap',
-  'ngAnimate'
+  'ngAnimate',
+  'notification',
+  'oitozero.ngSweetAlert'
 ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider

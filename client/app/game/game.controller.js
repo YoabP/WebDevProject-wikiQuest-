@@ -1,16 +1,38 @@
 'use strict';
 
 angular.module('wikiQuestApp')
-  .controller('GameCtrl', ['$scope','$anchorScroll','$location','wikiApi','wikiParserFilter',
-  function($scope, $anchorScroll, $location, wikiApi, wikiParserFilter) {
+  .controller('GameCtrl', ['$scope','$anchorScroll','$location','$http','wikiApi','wikiParserFilter','socket',
+  function($scope, $anchorScroll, $location, $http, wikiApi, wikiParserFilter, socket) {
     //tesst code, expendable
 
     ///////////////////////////////////////////////
     //Important code                            //
     //////////////////////////////////////////////
+    //get and clean parameters
+    var params = $location.search();
+    $scope.alias = params.alias?params.alias : 'Loner' ;
+    var matchId = params.match?params.match: 'solo' ;
+    console.log({alias:$scope.alias, match:matchId });
+    $location.search('alias',null);
+    $location.search('match',null);
     //variables
     var jumpBacks= 0;
     $scope.history=[];
+    //setup listeners
+    socket.socket.on('match:save', function (item) {
+      if(item._id === matchId){ //update cMatch
+        if(item.winner.name){
+          var winAlert = 'Winner: '+item.winner.name+'\n'+'Quest:'+item.winner.start+' >> '
+						+item.winner.end+'\n'+'Returns: '+item.winner.backs+'\n\n'+'Path:\n';
+					item.winner.pages.forEach(function(element,index) {
+						winAlert+=index+': ' + element+'\n'
+					});
+          alert(winAlert);
+          $http.delete('/api/matches/' + matchId);
+          $location.url('/matchMaking');
+        }
+      }
+    });
     //fetch start and end articles
     wikiApi.getRandomArticle().then(function(data) {
       $scope.start = data.title;
@@ -44,7 +66,7 @@ angular.module('wikiQuestApp')
         $scope.pageFullHTML = wikiParserFilter(data.parse.text['*'], title);
         //check for win condition
         if($scope.end === title){
-          alert('lol');
+          handleWin();
         }
       });
     };
@@ -57,6 +79,27 @@ angular.module('wikiQuestApp')
   		$scope.innerLink(title);
   		jumpBacks++;
       console.log(jumpBacks);
+  	}
+    //private Functions
+    function handleWin(){
+  		if(matchId != 'solo'){
+        var winner = {
+          winner: {
+            name: $scope.alias,
+    				backs: jumpBacks,
+    				start: $scope.start,
+    				end: $scope.end,
+    				pages: $scope.history
+          },
+          ended: true
+        };
+        $http.put('/api/matches/' + matchId, winner)
+        .then( function (response){console.log(response);});
+  		}
+  		else{
+  			alert("You won, but of course you were alone.")
+  			$location.url('/matchMaking');
+  		}
   	}
 
   }]);
