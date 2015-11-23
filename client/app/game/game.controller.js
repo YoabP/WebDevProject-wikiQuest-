@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('wikiQuestApp')
-  .controller('GameCtrl', ['$scope','$sce','wikiApi','wikiParserFilter',
-  function($scope, $sce, wikiApi, wikiParserFilter) {
+  .controller('GameCtrl', ['$scope','$anchorScroll','$location','wikiApi','wikiParserFilter',
+  function($scope, $anchorScroll, $location, wikiApi, wikiParserFilter) {
     //tesst code, expendable
-  
+
     ///////////////////////////////////////////////
     //Important code                            //
     //////////////////////////////////////////////
@@ -27,6 +27,14 @@ angular.module('wikiQuestApp')
         $scope.target = data;
       });
     });
+    //anchor links inside content
+    $scope.anchor = function(id) {
+        console.log(id);
+        var old = $location.hash();
+        $location.hash(id);
+        $anchorScroll();
+        $location.hash(old);
+    };
     //links affecting only wiki-frame
     $scope.innerLink = function innerLink (title){
       wikiApi.getFullRedirectSafe(title).then(function(data) {

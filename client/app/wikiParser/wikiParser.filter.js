@@ -14,23 +14,22 @@ angular.module('wikiQuestApp')
         var oldRef = element.getAttribute('href');
         if(oldRef) {
   				if (oldRef[0]=='#' && oldRef!='#'){
-            element.setAttribute('href', '#'+oldRef); //preserve anchor
+            //preserve anchor
+            element.setAttribute('ng-click', 'anchor("'+ oldRef.substring(1) + '")');
           }
   				else if (oldRef[0]=='/' && oldRef[1]=='w' && oldRef[2]!='/') { //is internal
   					var index = oldRef.lastIndexOf('/');
   					var pageName= decodeURIComponent(oldRef.substring(index+1));
             element.setAttribute('ng-click', 'innerLink("'+pageName.replace(/"/g, '\\"')+'")');
-            element.setAttribute('href', '#');
   				}
           else if (oldRef[0]=='/' && oldRef[1]=='w' && oldRef[2]=='/'){
             var pageName = element.textContent;
             element.setAttribute('ng-click', 'innerLink("'+pageName.replace(/"/g, '\\"')+'")');
-            element.setAttribute('href', '#');
           }
   				else {
-            element.setAttribute('href', '');
             element.classList.add('new');
           }
+          element.setAttribute('href', '');
   			}
       }
       //patch img tags
