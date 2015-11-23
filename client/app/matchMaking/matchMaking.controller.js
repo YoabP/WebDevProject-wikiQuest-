@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wikiQuestApp')
-  .controller('MatchMakingCtrl', function ($scope, $http, socket) {
+  .controller('MatchMakingCtrl', function ($scope, $http, $timeout, socket) {
 
 //important code
     //variables
@@ -56,7 +56,7 @@ angular.module('wikiQuestApp')
         //TODO: indicate match was created succes mssg
         changeMatch(response.data);
         $scope.hosting = true;
-        $scope.alerts.push({type: 'success', msg: "Match Created"});
+        createAlert("success", "Match Created", 3000);
         $scope.status.msg = "Match Created";
         $scope.status.style= "bg-success text-success";
       });
@@ -117,5 +117,14 @@ angular.module('wikiQuestApp')
         //Apply new match
         $scope.currentMatch = newMatch;
         $scope.hosting=false;
+      }
+      //create alert
+      function createAlert(type, msg, time){
+        var index = $scope.alerts.length;
+        $timeout(function() {
+          $scope.closeAlert(index);
+        }, time);
+        $scope.alerts.push({type: type, msg: msg});
+
       }
   });
