@@ -13,7 +13,7 @@ angular.module('wikiQuestApp', [
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/matchMaking'
       });
 
     $locationProvider.html5Mode(true);

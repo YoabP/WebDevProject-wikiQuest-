@@ -1,5 +1,9 @@
-<h3>Playing as: {{alias}}</h3>
 <div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3>Playing as: {{alias}}</h3>
+    </div>
+  </div>
   <div class="row">
     <div class="col-xs-4">
       <div class="row">
@@ -9,9 +13,9 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <div class="wq-history" scroll-on-change="history.length" mode="bottom">
+          <div class="wq-history" >
             <h1>History</h1>
-            <div>
+            <div scroll-on-change="history.length" mode="bottom">
               <ul>
                 <li ng-repeat="page in history track by $index">
                   <a href="#"  ng-click="getBack(page,$index)"> {{ page }} </a>

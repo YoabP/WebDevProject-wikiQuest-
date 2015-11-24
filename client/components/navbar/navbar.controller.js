@@ -4,16 +4,12 @@ angular.module('wikiQuestApp')
   .controller('NavbarCtrl', function ($scope, $location) {
     $scope.menu = [
       {
-        'title': 'Home',
-        'link': '/'
+        'title': 'Match Making',
+        'link': '/matchMaking'
       },
       {
         'title': 'Game',
         'link': '/game'
-      },
-      {
-        'title': 'Match Making',
-        'link': '/matchMaking'
       }
     ];
 

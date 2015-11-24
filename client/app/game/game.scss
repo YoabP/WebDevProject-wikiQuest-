@@ -1,19 +1,33 @@
+$shadow_color: #EEE;
+%shadow {
+  -moz-box-shadow:    10px 10px 0px 0px $shadow_color;
+  -webkit-box-shadow: 10px 10px 0px 0px $shadow_color;
+  box-shadow:         10px 10px 0px 0px $shadow_color;
+}
 .wq-content{
-  border: solid #A7D7F9;
-	background-color: #FFF;
+  @extend %shadow;
+  border: solid thin #A7D7F9;
+  background-color: #FEFEFE;
+  border-color: #DDD;
+  border-radius: 10px;
 	color: #252525;
 	padding: 10px 20px;
   height: 80vh;
   overflow: auto;
+  margin-bottom: 5vh;
 }
 .wq-target-frame{
   @extend .wq-content;
-  border: solid #F9D7A7;
-  height: 40vh;
+  height: 37.5vh;
+}
+.wq-win-alert{
+  padding-left: 30px;
+  text-align: justify;
+
+
 }
 .wq-history{
   @extend .wq-target-frame;
-  border: solid #D7F9A7;
   overflow: hidden;
   h1{
     margin: 0px;
@@ -28,5 +42,6 @@
   }
   div{
     overflow: auto;
+    height: 75%;
   }
 }

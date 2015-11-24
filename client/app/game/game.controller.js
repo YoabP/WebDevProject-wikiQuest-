@@ -3,33 +3,42 @@
 angular.module('wikiQuestApp')
   .controller('GameCtrl', ['$scope','$anchorScroll','$location','$http','wikiApi','wikiParserFilter','socket',
   function($scope, $anchorScroll, $location, $http, wikiApi, wikiParserFilter, socket) {
-    //tesst code, expendable
-
-    ///////////////////////////////////////////////
-    //Important code                            //
-    //////////////////////////////////////////////
     //get and clean parameters
     var params = $location.search();
     $scope.alias = params.alias?params.alias : 'Loner' ;
     var matchId = params.match?params.match: 'solo' ;
-    console.log({alias:$scope.alias, match:matchId });
     $location.search('alias',null);
     $location.search('match',null);
     //variables
     var jumpBacks= 0;
+    var won = false;
     $scope.history=[];
     //setup listeners
     socket.socket.on('match:save', function (item) {
       if(item._id === matchId){ //update cMatch
         if(item.winner.name){
-          var winAlert = 'Winner: '+item.winner.name+'\n'+'Quest:'+item.winner.start+' >> '
-						+item.winner.end+'\n'+'Returns: '+item.winner.backs+'\n\n'+'Path:\n';
+          var winAlert = '<div class = "wq-win-alert"><h4>Quest:&nbsp;<span class="small">'+item.winner.start+' >> '+ item.winner.end +"</span></h4>"
+          +'<h4>Returns Used:&nbsp;<span class="small">'+ item.winner.backs +(item.winner.backs==1?' return':' returns')+"</span></h4>"
+          +'<h4>Path:</h4><ul>\n';
 					item.winner.pages.forEach(function(element,index) {
-						winAlert+=index+': ' + element+'\n'
+						winAlert+='<li>' +index+': ' + element+'</li>';
 					});
-          alert(winAlert);
-          $http.delete('/api/matches/' + matchId);
-          $location.url('/matchMaking');
+          winAlert+='</ul></div>';
+          swal({
+            title: item.winner.name+" won!",
+            text: winAlert,
+            type: won?"success":"danger",
+            showCancelButton: false,
+            confirmButtonText: won?"Yeah!":"Ok",
+            closeOnConfirm: false,
+            html: true
+          },
+          function(){
+            $http.delete('/api/matches/' + matchId).then( function (){
+              swal.close();
+              $location.url('/matchMaking');
+            });
+          });
         }
       }
     });
@@ -38,20 +47,17 @@ angular.module('wikiQuestApp')
       $scope.start = data.title;
       $scope.history.push(data.title.replace(/_/g," "));
       wikiApi.getFullRedirectSafe($scope.start).then(function(data) {
-        console.log(data);
         $scope.pageFullHTML = wikiParserFilter(data.parse.text['*'], $scope.start );
       });
     });
     wikiApi.getRandomArticle().then(function(data) {
       $scope.end = data.title;
       wikiApi.getExtract($scope.end, data.id).then(function(data) {
-        console.log(data);
         $scope.target = data;
       });
     });
     //anchor links inside content
     $scope.anchor = function(id) {
-        console.log(id);
         var old = $location.hash();
         $location.hash(id);
         $anchorScroll();
@@ -78,11 +84,11 @@ angular.module('wikiQuestApp')
       }
   		$scope.innerLink(title);
   		jumpBacks++;
-      console.log(jumpBacks);
   	}
     //private Functions
     function handleWin(){
   		if(matchId != 'solo'){
+        won = true;
         var winner = {
           winner: {
             name: $scope.alias,
@@ -93,12 +99,22 @@ angular.module('wikiQuestApp')
           },
           ended: true
         };
-        $http.put('/api/matches/' + matchId, winner)
-        .then( function (response){console.log(response);});
+        $http.put('/api/matches/' + matchId, winner);
   		}
   		else{
-  			alert("You won, but of course you were alone.")
-  			$location.url('/matchMaking');
+        swal({
+          title: "You won!",
+          text: "By yourself though!",
+          type: "success",
+          showCancelButton: false,
+          confirmButtonText: "Yeah!",
+          closeOnConfirm: false,
+        },
+        function(){
+          $location.url('/matchMaking');
+          swal.close();
+          $scope.$apply();
+        });
   		}
   	}
 

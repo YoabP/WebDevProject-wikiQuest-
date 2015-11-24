@@ -14,7 +14,8 @@ var MatchSchema = new Schema({
     end: String,
     pages: [String]
   },
-  ended: Boolean
+  ended: Boolean,
+  messages: [{alias:String, msg: String}]
 });
 
 module.exports = mongoose.model('Match', MatchSchema);
