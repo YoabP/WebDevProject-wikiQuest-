@@ -19,7 +19,7 @@ angular.module('wikiQuestApp')
         if(item.winner.name){
           var winAlert = '<div class = "wq-win-alert"><h4>Quest:&nbsp;<span class="small">'+item.winner.start+' >> '+ item.winner.end +"</span></h4>"
           +'<h4>Returns Used:&nbsp;<span class="small">'+ item.winner.backs +(item.winner.backs==1?' return':' returns')+"</span></h4>"
-          +'<h4>Path:</h4><ul>\n';
+          +'<h4>Path:</h4><ul>';
 					item.winner.pages.forEach(function(element,index) {
 						winAlert+='<li>' +index+': ' + element+'</li>';
 					});
@@ -27,17 +27,24 @@ angular.module('wikiQuestApp')
           swal({
             title: item.winner.name+" won!",
             text: winAlert,
-            type: won?"success":"danger",
+            type: won?"success":"error",
             showCancelButton: false,
             confirmButtonText: won?"Yeah!":"Ok",
             closeOnConfirm: false,
             html: true
           },
           function(){
-            $http.delete('/api/matches/' + matchId).then( function (){
+            if (won){
+              $http.delete('/api/matches/' + matchId).then( function (){
+                swal.close();
+                $location.url('/matchMaking');
+              });
+            }
+            else{
               swal.close();
               $location.url('/matchMaking');
-            });
+              $scope.$apply();
+            }
           });
         }
       }
