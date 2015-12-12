@@ -10,7 +10,7 @@
                     <span class="wq-match-title">{{match.creator}}'s Match</span>
                   </div>
                   <div class="col-xs-4">
-                    <span class="pull-right wq-match-buttons">
+                    <span class="wq-match-buttons">
                       <a href class="btn btn-xs btn-primary" ng-click="joinMatch(match)" ng-if="match._id !== currentMatch._id">Join</a>
                       <a href class="btn btn-xs btn-danger" ng-click="cancelMatch()" ng-if="!hosting && match._id === currentMatch._id">Exit</a>
                       <a href class="btn btn-xs btn-danger" ng-click="cancelMatch()" ng-if="hosting && match._id === currentMatch._id">Cancel</a>
@@ -28,7 +28,7 @@
     </div>
     <div class="col-xs-8">
       <div class="wq-match-frame">
-        <h1>Match Info</h1>
+        <h1 class='wq-h1'>Match Info</h1>
         <p ng-if='!currentMatch._id'> You are currently not on a match. Create one, or join one, have fun!</p>
         <div ng-if='currentMatch._id'>
           <div class="wq-match-data">

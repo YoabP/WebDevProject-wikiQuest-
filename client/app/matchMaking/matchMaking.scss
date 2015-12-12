@@ -1,5 +1,35 @@
+//Media Queries
+@media (max-width: 767px) { //xs
+    .wq-h1{
+      font-size: 20px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) { //sm
+  .wq-h1{
+    font-size: 26px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) { //md
+  .wq-h1{
+    font-size: 30px;
+  }
+}
+
+@media (min-width: 1200px) { //lg and up
+  .wq-h1{
+    font-size: 36px;
+  }
+}
+
+
 .wq-matches-frame{
+  background-color: #EEE;
   overflow: auto;
+  height: 85vh;
+  padding: 5px;
+
   accordion{
     a.btn{
       margin-right: .5em;
@@ -19,7 +49,7 @@
   }
 }
 .wq-messages{
-  height: 40vh;
+  height: 30vh;
   border-radius: 10px;
   padding: .5em;
   background-color: #F3F3F3;
